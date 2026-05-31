@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import Chrome from "@/components/layout/Chrome";
 
 // Fraunces — variable serif with SOFT & WONK axes for the editorial feel.
 // `axes` requires the variable weight axis (omit `weight` or use "variable").
@@ -55,11 +54,7 @@ export default function RootLayout({
       className={`${fraunces.variable} ${inter.variable} ${jetbrains.variable}`}
     >
       <body className="min-h-screen flex flex-col">
-        <Navbar />
-        <main id="app" className="flex-1 relative z-[2]">
-          {children}
-        </main>
-        <Footer />
+        <Chrome>{children}</Chrome>
       </body>
     </html>
   );
