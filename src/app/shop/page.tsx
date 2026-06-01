@@ -71,9 +71,17 @@ const fallbackCategories = [
 // ─── Page ──────────────────────────────────────────────────
 
 export default async function ShopPage() {
+  // Same pattern as /gallery — keep the placeholder set visible until
+  // Sanity actually has artworks for sale.
   const useSanity = isSanityConfigured();
-  const artworks = useSanity ? await getShopArtworks() : fallbackShopArtworks;
-  const categories = useSanity ? await getCategories() : fallbackCategories;
+  const sanityArtworks = useSanity ? await getShopArtworks() : [];
+  const sanityCategories = useSanity ? await getCategories() : [];
+  const artworks = sanityArtworks.length
+    ? sanityArtworks
+    : fallbackShopArtworks;
+  const categories = sanityArtworks.length
+    ? sanityCategories
+    : fallbackCategories;
 
   return (
     <section className="section">

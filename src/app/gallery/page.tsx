@@ -80,9 +80,16 @@ const fallbackCategories = [
 // ─── Page ──────────────────────────────────────────────────
 
 export default async function GalleryPage() {
+  // If Sanity is configured but still empty (e.g. during initial setup
+  // before mom has added pieces), fall back to the local placeholder set
+  // so the page never renders an empty grid.
   const useSanity = isSanityConfigured();
-  const artworks = useSanity ? await getAllArtworks() : fallbackArtworks;
-  const categories = useSanity ? await getCategories() : fallbackCategories;
+  const sanityArtworks = useSanity ? await getAllArtworks() : [];
+  const sanityCategories = useSanity ? await getCategories() : [];
+  const artworks = sanityArtworks.length ? sanityArtworks : fallbackArtworks;
+  const categories = sanityArtworks.length
+    ? sanityCategories
+    : fallbackCategories;
 
   return (
     <section className="section">

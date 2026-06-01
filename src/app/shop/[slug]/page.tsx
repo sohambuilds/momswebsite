@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import ProductImages from "@/components/shop/ProductImages";
 import AddToCartButton from "@/components/shop/AddToCartButton";
 import Badge from "@/components/ui/Badge";
@@ -68,20 +67,22 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
   const useSanity = isSanityConfigured();
 
-  const product = useSanity ? await getArtworkBySlug(slug) : mockProduct;
-
-  if (!product) {
-    notFound();
-  }
+  // Sanity gets first crack. If it doesn't have the slug (during setup, or
+  // for legacy fallback URLs), serve the local placeholder so the page never
+  // 404s on a link from the rest of the site.
+  const sanityProduct = useSanity ? await getArtworkBySlug(slug) : null;
+  const product = sanityProduct ?? mockProduct;
 
   // Resolve images to URLs
   const imageUrls = useSanity && product.images?.length
     ? product.images.map((img) => urlFor(img).width(800).height(1000).url())
     : mockImages;
 
-  const relatedArtworks = useSanity
+  // Related: use Sanity's recommendations if it has them, else fall back.
+  const sanityRelated = useSanity
     ? await getRelatedArtworks(slug, product.category)
-    : fallbackRelated;
+    : [];
+  const relatedArtworks = sanityRelated.length ? sanityRelated : fallbackRelated;
 
   return (
     <>

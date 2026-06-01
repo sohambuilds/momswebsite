@@ -50,7 +50,11 @@ function readingTime(excerpt: string): string {
 // ─── Page ──────────────────────────────────────────────────
 
 export default async function BlogPage() {
-  const posts = isSanityConfigured() ? await getAllBlogPosts() : fallbackPosts;
+  // Keep the four placeholder articles visible while Sanity is empty —
+  // they're all written from mom's actual answers so they're real content,
+  // just not yet stored in Sanity.
+  const sanityPosts = isSanityConfigured() ? await getAllBlogPosts() : [];
+  const posts = sanityPosts.length ? sanityPosts : fallbackPosts;
 
   return (
     <section className="section" id="journal">

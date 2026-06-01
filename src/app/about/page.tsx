@@ -106,15 +106,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "minmax(0, 1.4fr) minmax(0, 1fr)",
-            gap: 56,
-            alignItems: "start",
-          }}
-          className="about-intro"
-        >
+        <div className="responsive-two-col">
           <div>
             <p
               style={{
@@ -281,15 +273,10 @@ export default function AboutPage() {
 
         {/* Wide studio shot beneath the intro */}
         <div
+          className="responsive-banner"
           style={{
             marginTop: 56,
-            width: "100%",
-            aspectRatio: "16 / 7",
             backgroundImage: "url('/studio.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            borderRadius: 14,
-            border: "1px solid rgba(58,46,36,0.12)",
           }}
           role="img"
           aria-label="Suhrita's studio corner"
@@ -375,33 +362,18 @@ export default function AboutPage() {
 
         {/* Close-up of hands at work */}
         <div
+          className="responsive-banner"
           style={{
-            width: "100%",
-            aspectRatio: "16 / 7",
             backgroundImage: "url('/hands.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            borderRadius: 14,
-            border: "1px solid rgba(58,46,36,0.12)",
             marginBottom: 40,
           }}
           role="img"
           aria-label="Hands shaping clay"
         />
 
-        <div style={{ display: "grid", gap: 18, maxWidth: 880 }}>
+        <div style={{ display: "grid", gap: 0, maxWidth: 880 }}>
           {PROCESS_STEPS.map((s) => (
-            <div
-              key={s.n}
-              style={{
-                display: "grid",
-                gridTemplateColumns: "60px 130px 1fr",
-                gap: 24,
-                padding: "22px 0",
-                borderBottom: "1px dashed rgba(58,46,36,0.18)",
-                alignItems: "baseline",
-              }}
-            >
+            <div key={s.n} className="responsive-process-row">
               <div
                 style={{
                   fontFamily: "var(--serif)",
@@ -414,6 +386,7 @@ export default function AboutPage() {
                 {s.n}
               </div>
               <div
+                className="process-label"
                 style={{
                   fontFamily: "var(--mono)",
                   fontSize: 11,
@@ -425,6 +398,7 @@ export default function AboutPage() {
                 {s.label}
               </div>
               <p
+                className="process-body"
                 style={{
                   fontFamily: "var(--serif)",
                   fontSize: 17,
@@ -453,18 +427,9 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div style={{ display: "grid", gap: 18, maxWidth: 880 }}>
+        <div style={{ display: "grid", gap: 0, maxWidth: 880 }}>
           {VALUES.map((v, i) => (
-            <div
-              key={v.title}
-              style={{
-                display: "grid",
-                gridTemplateColumns: "60px 1fr",
-                gap: 24,
-                padding: "22px 0",
-                borderBottom: "1px dashed rgba(58,46,36,0.18)",
-              }}
-            >
+            <div key={v.title} className="responsive-value-row">
               <div
                 style={{
                   fontFamily: "var(--serif)",

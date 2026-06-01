@@ -132,11 +132,12 @@ export default async function BlogPostPage({
         body: sanityPost.body, // PortableTextBlock[]
       };
     }
-  } else {
-    // Look up the slug in the fallback map. If a visitor types an unknown
-    // slug, fall back to the origin story rather than 404'ing immediately —
-    // the rest of the site links to four known slugs, so this is just safety.
-    post = FALLBACK_POSTS[slug] ?? FALLBACK_POSTS["before-i-lose-my-sight"];
+  }
+
+  // If Sanity didn't have the slug (either not configured, or configured
+  // but the post hasn't been authored yet), fall back to the local map.
+  if (!post) {
+    post = FALLBACK_POSTS[slug] ?? null;
   }
 
   if (!post) notFound();
